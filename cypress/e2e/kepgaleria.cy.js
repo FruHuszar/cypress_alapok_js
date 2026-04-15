@@ -57,5 +57,16 @@ describe("képgaléria funkciók", () => {
       expect(img).to.have.attr("src", KEPLISTA[index].kep);
     });
   });
-  it("kattintas_kiskepekre", function () {});
+  it("kattintas_kiskepekre", function () {
+    cy.visit("https://nao529.github.io/kepgaleria/");
+    cy.get(".kiskepek div.kiskep img").each((img, index) => {
+      cy.get(".kiskep img")
+        .eq(index)
+        .invoke("attr", "src")
+        .then((src) => {
+          cy.get(".kiskep img").eq(index).click();
+          cy.get(".nagykep img").should("have.attr", "src", src);
+        });
+    });
+  });
 });
