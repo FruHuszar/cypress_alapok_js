@@ -57,4 +57,5 @@ describe("képgaléria funkciók", () => {
       expect(img).to.have.attr("src", KEPLISTA[index].kep);
     });
   });
+  it("kattintas_kiskepekre", function () {});
 });
