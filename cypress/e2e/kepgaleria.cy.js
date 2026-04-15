@@ -69,4 +69,64 @@ describe("képgaléria funkciók", () => {
         });
     });
   });
+  it("jobbra_leptetes", function () {
+    cy.visit("https://nao529.github.io/kepgaleria/");
+
+    const KEPLISTA = [
+      {
+        kep: "kepek/kawasaki_ninja_zx6r.jpg",
+        modell: "Kawasaki Ninja ZX-6R",
+      },
+      {
+        kep: "kepek/kawasaki_ninja_h2.jpg",
+        modell: "Kawasaki Ninja H2",
+      },
+      {
+        kep: "kepek/yamaha_mt07.jpg",
+        modell: "Yamaha MT-07",
+      },
+      {
+        kep: "kepek/indian_scout_bobber.jpg",
+        modell: "Indian Scout Bobber",
+      },
+      {
+        kep: "kepek/ducati_monster_1200s.jpg",
+        modell: "Ducati Monster 1200S",
+      },
+      {
+        kep: "kepek/honda_cbr_650r.jpg",
+        modell: "Honda CBR 650R",
+      },
+      {
+        kep: "kepek/honda_cb500fa.jpg",
+        modell: "Honda CB500F",
+      },
+      {
+        kep: "kepek/honda_gsxr750.jpg",
+        modell: "Honda GSX-R750",
+      },
+    ];
+
+    // Ellenőrizzük, hogy létezik-e a jobb gomb, majd kattintás
+    cy.get("button.jobb").should("be.visible").click();
+
+    // A nagykép src-nek a lista[1].kep-nek kell lennie az első kattintás után
+    cy.get("div.nagykep img").should("have.attr", "src", KEPLISTA[1].kep);
+
+    // Végigkattintunk a maradék képeken (a 2. indextől indulva)
+    for (let i = 2; i < KEPLISTA.length; i++) {
+      cy.get("button.jobb").click();
+      cy.get("div.nagykep img").should("have.attr", "src", KEPLISTA[i].kep);
+    }
+
+    // Másik fajta:
+    /*
+    cy.wrap(KEPLISTA).each((aktElem, index) => {
+      if (index > 0) {
+        cy.get("button.jobb").click();
+      }
+      cy.get("div.nagykep img").should("have.attr", "src", aktElem.kep);
+    });
+    */
+  });
 });
